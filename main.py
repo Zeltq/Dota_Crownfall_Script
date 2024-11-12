@@ -26,7 +26,7 @@ def main(heroes_list):
 
     required_tokens = input("Enter the required tokens separated by a space: ").split(",")
 
-    required_tokens = [token.strip() for token in required_tokens]
+    required_tokens = [token.strip().capitalize() for token in required_tokens]
 
     best_heroes, max_tokens = find_best_heroes(heroes_list, required_tokens)
 
