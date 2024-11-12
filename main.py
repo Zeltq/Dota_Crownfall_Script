@@ -30,7 +30,7 @@ def main(heroes_list):
 
     best_heroes, max_tokens = find_best_heroes(heroes_list, required_tokens)
 
-    print(f"Best heroes: {', '.join(best_heroes)} you can get: {max_tokens} tokens if you win")
+    print(f"Best heroes: \n\n{', '.join(best_heroes)} \n\nyou can get: {max_tokens} tokens if you win")
 
 if __name__ == "__main__":
     main(heroes_list)
