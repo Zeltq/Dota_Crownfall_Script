@@ -1,26 +1,13 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 from heroes import heroes_list
-from collections import Counter
+import secrets
+from main import find_best_heroes
 
+secret_key = secrets.token_urlsafe(32)
 app = Flask(__name__)
 
-def find_best_heroes(heroes, required_tokens):
-    heroes_with_3_tokens = []
-    heroes_with_2_tokens = []
-    
-    required_count = Counter(required_tokens)
+app.secret_key = secret_key
 
-    for hero in heroes:
-        hero_count = Counter(hero.tokens)
-
-        matching_tokens = sum(min(hero_count[token], required_count[token]) for token in required_count)
-
-        if matching_tokens == 3:
-            heroes_with_3_tokens.append(hero.name)
-        elif matching_tokens == 2:
-            heroes_with_2_tokens.append(hero.name)
-
-    return heroes_with_3_tokens, heroes_with_2_tokens
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -49,14 +36,24 @@ def index():
     tokens.sort()
     heroes_with_3_tokens = []
     heroes_with_2_tokens = []
+    selected_tokens = []
 
     if request.method == 'POST':
         selected_tokens = request.form.getlist('tokens')
         # Удаляем пустые значения из списка выбранных жетонов
         selected_tokens = [token for token in selected_tokens if token]
         heroes_with_3_tokens, heroes_with_2_tokens = find_best_heroes(heroes_list, selected_tokens)
+        session['selected_tokens'] = selected_tokens
+    elif 'selected_tokens' in session:
+        selected_tokens = session['selected_tokens']
 
-    return render_template('index.html', tokens=tokens, heroes_with_3_tokens=heroes_with_3_tokens, heroes_with_2_tokens=heroes_with_2_tokens)
+    num_selects = 10
+    token_options_list = []
+    for i in range(num_selects):
+      token_options = [{'value': token, 'selected': token == selected_tokens[i] if i < len(selected_tokens) else False} for token in tokens]
+      token_options_list.append(token_options)
+
+    return render_template('index.html', tokens=token_options_list, heroes_with_3_tokens=heroes_with_3_tokens, heroes_with_2_tokens=heroes_with_2_tokens)
 
 if __name__ == '__main__':
     app.run(debug=True)
