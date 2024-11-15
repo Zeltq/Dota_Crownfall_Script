@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero Token Finder</title>
+    <style>
+        .token-select {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Find Best Heroes</h1>
+    <form method="POST">
+        {% for i in range(10) %}
+            <div class="token-select">
+                <label for="tokens{{ i }}">Select token {{ i + 1 }}:</label><br>
+                <select name="tokens" id="tokens{{ i }}">
+                    <option value="">-- Select a token --</option>  <!-- Пустой элемент -->
+                    {% for token in tokens %}
+                        <option value="{{ token }}">{{ token }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% endfor %}
+        <button type="button" onclick="addPoint()">Добавить точку</button>
+        <button type="button" onclick="removePoint()">Убрать точку</button>
+        <input type="submit" value="Find Heroes">
+    </form>
+
+    {% if heroes_with_3_tokens %}
+        <h2>Heroes with 3 matching tokens:</h2>
+        <p>{{ ', '.join(heroes_with_3_tokens) }}</p>
+    {% else %}
+        <h2>Heroes with 3 matching tokens:</h2>
+        <p>None</p>
+    {% endif %}
+
+    {% if heroes_with_2_tokens %}
+        <h2>Heroes with 2 matching tokens:</h2>
+        <p>{{ ', '.join(heroes_with_2_tokens) }}</p>
+    {% else %}
+        <h2>Heroes with 2 matching tokens:</h2>
+        <p>None</p>
+    {% endif %}
+</body>
+</html>
