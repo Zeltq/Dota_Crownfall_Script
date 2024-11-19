@@ -50,10 +50,12 @@ def index():
     num_selects = 10
     token_options_list = []
     for i in range(num_selects):
-      token_options = [{'value': token, 'selected': token == selected_tokens[i] if i < len(selected_tokens) else False} for token in tokens]
+      token_options = [{'value': token, 'selected': token == selected_tokens[i] if i < \
+                        len(selected_tokens) else False} for token in tokens]
       token_options_list.append(token_options)
 
-    return render_template('index.html', tokens=token_options_list, heroes_with_3_tokens=heroes_with_3_tokens, heroes_with_2_tokens=heroes_with_2_tokens)
+    return render_template('index.html', tokens=token_options_list, heroes_with_3_tokens=\
+                           heroes_with_3_tokens, heroes_with_2_tokens=heroes_with_2_tokens)
 
 if __name__ == '__main__':
     app.run(debug=True)

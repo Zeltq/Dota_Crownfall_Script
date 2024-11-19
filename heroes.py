@@ -127,7 +127,7 @@ heroes_list = [
     Hero("Chen", ["Love", "Love", "Desert"]),
     Hero("Enchantress", ["Love", "Love", "Forest"]),
     Hero("Batrider", ["Love", "Mischief", "Sky"]),
-    Hero("Dawnbreaker", ["Love", "Sky", "Cosmos"]),
+    Hero("Dawnbreaker", ["Love", "Sky", "Cosmos"]   ),
     Hero("Hoodwink", ["Love", "Mischief", "Forest"]),
     Hero("Io", ["Love", "Cosmos", "Cosmos"]),
     Hero("Nature's Prophet", ["Love", "Forest", "Forest"]),
